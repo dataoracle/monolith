@@ -523,7 +523,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     overflow: 'hidden',
     backgroundColor: '#141416',
-    aspectRatio: 1,
+    aspectRatio: 3 / 4,
     marginBottom: 18,
   },
   image: {
