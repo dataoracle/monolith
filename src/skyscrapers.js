@@ -1,234 +1,7 @@
-// Facts compiled from public sources (Council on Tall Buildings and Urban
-// Habitat, Wikipedia). Height in meters (architectural). Year is completion.
-// `wiki` is the exact English Wikipedia article slug — used to fetch the
-// lead thumbnail image from the Wikipedia REST summary API at runtime.
+import data from '../assets/data/skyscrapers.json';
+import { IMAGES } from './images';
 
-export const SKYSCRAPERS = [
-  {
-    name: 'Burj Khalifa',
-    country: 'United Arab Emirates',
-    height: 828,
-    floors: 163,
-    year: 2010,
-    wiki: 'Burj_Khalifa',
-  },
-  {
-    name: 'Shanghai Tower',
-    country: 'China',
-    height: 632,
-    floors: 128,
-    year: 2015,
-    wiki: 'Shanghai_Tower',
-  },
-  {
-    name: 'Abraj Al-Bait Clock Tower',
-    country: 'Saudi Arabia',
-    height: 601,
-    floors: 120,
-    year: 2012,
-    wiki: 'Abraj_Al-Bait',
-  },
-  {
-    name: 'Ping An Finance Center',
-    country: 'China',
-    height: 599,
-    floors: 115,
-    year: 2017,
-    wiki: 'Ping_An_Finance_Centre',
-  },
-  {
-    name: 'Lotte World Tower',
-    country: 'South Korea',
-    height: 555,
-    floors: 123,
-    year: 2017,
-    wiki: 'Lotte_World_Tower',
-  },
-  {
-    name: 'One World Trade Center',
-    country: 'United States',
-    height: 541,
-    floors: 94,
-    year: 2014,
-    wiki: 'One_World_Trade_Center',
-  },
-  {
-    name: 'Guangzhou CTF Finance Centre',
-    country: 'China',
-    height: 530,
-    floors: 111,
-    year: 2016,
-    wiki: 'Guangzhou_CTF_Finance_Centre',
-  },
-  {
-    name: 'CITIC Tower',
-    country: 'China',
-    height: 528,
-    floors: 108,
-    year: 2018,
-    wiki: 'CITIC_Tower',
-  },
-  {
-    name: 'Taipei 101',
-    country: 'Taiwan',
-    height: 508,
-    floors: 101,
-    year: 2004,
-    wiki: 'Taipei_101',
-  },
-  {
-    name: 'Shanghai World Financial Center',
-    country: 'China',
-    height: 492,
-    floors: 101,
-    year: 2008,
-    wiki: 'Shanghai_World_Financial_Center',
-  },
-  {
-    name: 'International Commerce Centre',
-    country: 'Hong Kong',
-    height: 484,
-    floors: 108,
-    year: 2010,
-    wiki: 'International_Commerce_Centre',
-  },
-  {
-    name: 'Central Park Tower',
-    country: 'United States',
-    height: 472,
-    floors: 98,
-    year: 2020,
-    wiki: 'Central_Park_Tower',
-  },
-  {
-    name: 'Lakhta Center',
-    country: 'Russia',
-    height: 462,
-    floors: 87,
-    year: 2019,
-    wiki: 'Lakhta_Center',
-  },
-  {
-    name: 'Landmark 81',
-    country: 'Vietnam',
-    height: 461,
-    floors: 81,
-    year: 2018,
-    wiki: 'Landmark_81',
-  },
-  {
-    name: 'Petronas Twin Towers',
-    country: 'Malaysia',
-    height: 452,
-    floors: 88,
-    year: 1998,
-    wiki: 'Petronas_Towers',
-  },
-  {
-    name: 'Willis Tower',
-    country: 'United States',
-    height: 442,
-    floors: 108,
-    year: 1973,
-    wiki: 'Willis_Tower',
-  },
-  {
-    name: '432 Park Avenue',
-    country: 'United States',
-    height: 426,
-    floors: 85,
-    year: 2015,
-    wiki: '432_Park_Avenue',
-  },
-  {
-    name: 'Jin Mao Tower',
-    country: 'China',
-    height: 421,
-    floors: 88,
-    year: 1999,
-    wiki: 'Jin_Mao_Tower',
-  },
-  {
-    name: 'Two International Finance Centre',
-    country: 'Hong Kong',
-    height: 412,
-    floors: 88,
-    year: 2003,
-    wiki: 'International_Finance_Centre_(Hong_Kong)',
-  },
-  {
-    name: 'Empire State Building',
-    country: 'United States',
-    height: 381,
-    floors: 102,
-    year: 1931,
-    wiki: 'Empire_State_Building',
-  },
-  {
-    name: 'Federation Tower',
-    country: 'Russia',
-    height: 374,
-    floors: 93,
-    year: 2016,
-    wiki: 'Federation_Tower',
-  },
-  {
-    name: 'Bank of China Tower',
-    country: 'Hong Kong',
-    height: 367,
-    floors: 72,
-    year: 1990,
-    wiki: 'Bank_of_China_Tower_(Hong_Kong)',
-  },
-  {
-    name: 'Mercury City Tower',
-    country: 'Russia',
-    height: 339,
-    floors: 75,
-    year: 2013,
-    wiki: 'Mercury_City_Tower',
-  },
-  {
-    name: 'Burj Al Arab',
-    country: 'United Arab Emirates',
-    height: 321,
-    floors: 56,
-    year: 1999,
-    wiki: 'Burj_Al_Arab',
-  },
-  {
-    name: 'Chrysler Building',
-    country: 'United States',
-    height: 319,
-    floors: 77,
-    year: 1930,
-    wiki: 'Chrysler_Building',
-  },
-  {
-    name: 'The Shard',
-    country: 'United Kingdom',
-    height: 310,
-    floors: 72,
-    year: 2012,
-    wiki: 'The_Shard',
-  },
-  {
-    name: 'Q1 Tower',
-    country: 'Australia',
-    height: 322,
-    floors: 78,
-    year: 2005,
-    wiki: 'Q1_(Gold_Coast)',
-  },
-  {
-    name: 'Torre Costanera',
-    country: 'Chile',
-    height: 300,
-    floors: 62,
-    year: 2014,
-    wiki: 'Gran_Torre_Santiago',
-  },
-];
+export const SKYSCRAPERS = data.map((s) => ({ ...s, image: IMAGES[s.id] }));
 
 export const CATEGORIES = [
   { key: 'name', label: 'Name' },
@@ -237,3 +10,21 @@ export const CATEGORIES = [
   { key: 'floors', label: 'Floors' },
   { key: 'year', label: 'Year of construction' },
 ];
+
+if (__DEV__) {
+  const dataIds = new Set(data.map((s) => s.id));
+  for (const s of data) {
+    if (!IMAGES[s.id]) {
+      console.warn(
+        `[monolith] No image bundled for "${s.id}" — add one in src/images.js`,
+      );
+    }
+  }
+  for (const id of Object.keys(IMAGES)) {
+    if (!dataIds.has(id)) {
+      console.warn(
+        `[monolith] Image bundled for "${id}" has no matching entry in assets/data/skyscrapers.json`,
+      );
+    }
+  }
+}

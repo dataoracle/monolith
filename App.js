@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
-  ActivityIndicator,
   Image,
   Pressable,
   SafeAreaView,
@@ -104,8 +103,6 @@ export default function App() {
   const [selected, setSelected] = useState(null);
   const [locked, setLocked] = useState(false);
   const [bestScore, setBestScore] = useState(0);
-  const [images, setImages] = useState({}); // wikiSlug -> url | null
-  const [loadingImages, setLoadingImages] = useState(true);
 
   useEffect(() => {
     AsyncStorage.getItem(BEST_SCORE_KEY)
@@ -113,35 +110,6 @@ export default function App() {
         if (v != null) setBestScore(parseInt(v, 10) || 0);
       })
       .catch(() => {});
-  }, []);
-
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      const entries = await Promise.all(
-        SKYSCRAPERS.map(async (s) => {
-          try {
-            const res = await fetch(
-              `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(s.wiki)}`,
-              { headers: { Accept: 'application/json' } },
-            );
-            if (!res.ok) return [s.wiki, null];
-            const json = await res.json();
-            const url =
-              json?.originalimage?.source ?? json?.thumbnail?.source ?? null;
-            return [s.wiki, url];
-          } catch {
-            return [s.wiki, null];
-          }
-        }),
-      );
-      if (cancelled) return;
-      setImages(Object.fromEntries(entries));
-      setLoadingImages(false);
-    })();
-    return () => {
-      cancelled = true;
-    };
   }, []);
 
   const startRound = useCallback(() => {
@@ -186,13 +154,7 @@ export default function App() {
   const goHome = useCallback(() => setScreen('home'), []);
 
   if (screen === 'home') {
-    return (
-      <HomeScreen
-        bestScore={bestScore}
-        loadingImages={loadingImages}
-        onStart={startRound}
-      />
-    );
+    return <HomeScreen bestScore={bestScore} onStart={startRound} />;
   }
 
   if (screen === 'quiz') {
@@ -205,7 +167,7 @@ export default function App() {
         score={score}
         selected={selected}
         locked={locked}
-        imageUrl={images[current.target.wiki]}
+        imageSource={current.target.image}
         onSelect={handleSelect}
         onQuit={goHome}
       />
@@ -223,7 +185,7 @@ export default function App() {
   );
 }
 
-function HomeScreen({ bestScore, loadingImages, onStart }) {
+function HomeScreen({ bestScore, onStart }) {
   return (
     <SafeAreaView style={styles.safe}>
       <StatusBar style="light" />
@@ -262,13 +224,6 @@ function HomeScreen({ bestScore, loadingImages, onStart }) {
           <Text style={styles.primaryBtnText}>Start round</Text>
         </Pressable>
 
-        {loadingImages && (
-          <View style={styles.loadingRow}>
-            <ActivityIndicator color="#9aa5b1" />
-            <Text style={styles.loadingText}>Loading images…</Text>
-          </View>
-        )}
-
         <Text style={styles.footer}>
           Identify the skyscraper by its name, country, height, floors, or year.
         </Text>
@@ -284,7 +239,7 @@ function QuizScreen({
   score,
   selected,
   locked,
-  imageUrl,
+  imageSource,
   onSelect,
   onQuit,
 }) {
@@ -313,9 +268,9 @@ function QuizScreen({
         </View>
 
         <View style={styles.imageWrap}>
-          {imageUrl ? (
+          {imageSource ? (
             <Image
-              source={{ uri: imageUrl }}
+              source={imageSource}
               style={styles.image}
               resizeMode="cover"
             />
@@ -520,17 +475,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '600',
     letterSpacing: 1,
-  },
-  loadingRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 14,
-  },
-  loadingText: {
-    color: '#6b7380',
-    marginLeft: 8,
-    fontSize: 12,
   },
   footer: {
     color: '#6b7380',
