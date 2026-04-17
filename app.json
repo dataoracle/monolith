@@ -1,0 +1,27 @@
+{
+  "expo": {
+    "name": "Monolith",
+    "slug": "monolith",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#0a0a0a",
+    "splash": {
+      "backgroundColor": "#0a0a0a",
+      "resizeMode": "contain"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.monolith.quiz"
+    },
+    "android": {
+      "package": "com.monolith.quiz",
+      "adaptiveIcon": {
+        "backgroundColor": "#0a0a0a"
+      }
+    },
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}
